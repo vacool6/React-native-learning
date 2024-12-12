@@ -1,4 +1,11 @@
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  FlatList,
+  StyleSheet,
+  Text,
+  useWindowDimensions,
+  View,
+} from "react-native";
 import { CustomBtn } from "./CustomBtn";
 import { useEffect, useState } from "react";
 
@@ -8,7 +15,7 @@ const GuessContainer = (props) => {
   return (
     <View style={styles.guess}>
       <Text># {length - data.index}</Text>
-      <Text>Guessed number - {data.item.guess}</Text>
+      <Text>Guessed number- {data.item.guess}</Text>
     </View>
   );
 };
@@ -18,6 +25,8 @@ const GameScreen = (props) => {
   const [low, setLow] = useState(1);
   const [high, setHigh] = useState(99);
   const [guess, setGuess] = useState(Math.floor((1 + 99) / 2));
+
+  const { height } = useWindowDimensions();
 
   const handleHigh = () => {
     if (guess >= selectedNumber) {
@@ -54,14 +63,13 @@ const GameScreen = (props) => {
     }
   }, [guess]);
 
-  return (
-    <View>
+  let content = (
+    <>
       <Text style={styles.heading}>Try Guessing!</Text>
       <View>
         <CustomBtn handler={handleLow}>Low</CustomBtn>
         <CustomBtn handler={handleHigh}>High</CustomBtn>
       </View>
-
       <Text style={styles.text}>Your guesses!</Text>
       <FlatList
         data={props.wrongGuesses}
@@ -72,8 +80,33 @@ const GameScreen = (props) => {
         }}
         keyExtractor={(id) => id.uniqueId}
       />
-    </View>
+    </>
   );
+
+  if (height < 380) {
+    content = (
+      <>
+        <Text style={styles.heading}>Try Guessing!</Text>
+        <View style={styles.btnContainer}>
+          <CustomBtn handler={handleLow}>Low</CustomBtn>
+          <CustomBtn handler={handleHigh}>High</CustomBtn>
+        </View>
+
+        <Text style={styles.text}>Your guesses!</Text>
+        <FlatList
+          data={props.wrongGuesses}
+          renderItem={(item) => {
+            return (
+              <GuessContainer data={item} length={props.wrongGuesses.length} />
+            );
+          }}
+          keyExtractor={(id) => id.uniqueId}
+        />
+      </>
+    );
+  }
+
+  return <View style={{ marginBottom: 10 }}>{content}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -82,6 +115,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     fontSize: 24,
     padding: 10,
+    textAlign: "center",
   },
   guesses: {
     marginTop: 18,
@@ -97,6 +131,11 @@ const styles = StyleSheet.create({
     backgroundColor: "whitesmoke",
     flexDirection: "row",
     justifyContent: "space-between",
+  },
+  btnContainer: {
+    flexDirection: "row",
+    marginTop: 10,
+    marginBottom: 10,
   },
 });
 

@@ -14,9 +14,10 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: "orange",
     borderRadius: 14,
-    margin: 30,
     marginTop: 4,
     marginBottom: 4,
+    maxWidth: 200,
+    minWidth: 160,
   },
   text: {
     textAlign: "center",
@@ -27,9 +28,10 @@ const styles = StyleSheet.create({
   active: {
     backgroundColor: "pink",
     borderRadius: 14,
-    margin: 30,
     marginTop: 4,
     marginBottom: 4,
+    maxWidth: 200,
+    minWidth: 160,
     transform: "scale(0.9)",
   },
 });

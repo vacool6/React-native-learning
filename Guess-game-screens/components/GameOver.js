@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View, Dimensions } from "react-native";
 import { CustomBtn } from "./CustomBtn";
 
 const GameOver = ({
@@ -14,7 +14,7 @@ const GameOver = ({
     setWrongGuesses([]);
   }
   return (
-    <View>
+    <View style={styles.container}>
       <Image
         source={require("../assets/splash-icon.png")}
         style={styles.imgContainer}
@@ -29,11 +29,17 @@ const GameOver = ({
   );
 };
 
+// Dimensions API ===========
+const deviceWidth = Dimensions.get("window").width;
+
 const styles = StyleSheet.create({
+  container: {
+    alignItems: "center",
+  },
   imgContainer: {
-    width: 250,
-    height: 250,
-    borderRadius: 250 / 2,
+    width: deviceWidth < 380 ? 100 : 250,
+    height: deviceWidth < 380 ? 100 : 250,
+    borderRadius: deviceWidth < 380 ? 100 / 2 : 250 / 2,
     borderWidth: 4,
     borderColor: "green",
   },

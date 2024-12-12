@@ -45,6 +45,7 @@ const styles = StyleSheet.create({
     width: "75%",
     borderRadius: 12,
     padding: 2,
+    alignItems: "center",
   },
   inputContainer: {
     alignItems: "center",
